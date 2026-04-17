@@ -1,0 +1,335 @@
+#root {
+  font-family: "Poppins";
+}
+
+.hero-section-color {
+  background-color: #ffe8e6;
+}
+
+.custom-select-register .ant-select-selector {
+  border-radius: 1rem; /* Matches Tailwind's rounded-2xl */
+  border: 2px solid var(--primary-color); /* Replace with your Tailwind border color */
+  padding: 0.5rem 1rem; /* Match the padding of your custom input */
+  outline: none; /* Remove any default outlines */
+  box-shadow: none; /* Remove default AntD shadow */
+}
+
+.custom-select-register .ant-select-selector:focus,
+.custom-select-register .ant-select-focused .ant-select-selector {
+  border-color: var(--primary-color); /* Replace with your primary color */
+  box-shadow: 0 0 0 2px var(--primary-color); /* Match the ring color */
+}
+.hero-banner {
+  background-image: url("./assets/heroBanner.svg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  object-position: center;
+  height: auto;
+  min-height: 400px;
+  width: 100%;
+}
+.c {
+  background-image: url("./assets/chatbotBg.png");
+  background-position: right;
+  background-size: contain;
+  background-repeat: no-repeat;
+  object-fit:contain;
+  object-position: right;
+  
+}
+.custom-select .ant-select-selector {
+  border: 1px solid #000; /* Add a black border */
+  border-radius: 4px; /* Optional: Adjust the border-radius as needed */
+}
+
+.custom-select .ant-select-selector:focus,
+.custom-select .ant-select-selector:hover {
+  border-color: #000; /* Keep the border color black on focus or hover */
+  box-shadow: none; /* Remove the default box-shadow */
+}
+.ant-btn[disabled] {
+  color: white !important; /* Replace with your desired color */
+}
+.custom-select .ant-select-selector {
+  border-radius: 6px; /* Match border radius */
+}
+.custom-select .ant-select-selector:hover {
+  outline: none;
+  border-color: #8e5ba6 !important; /* Override Ant Design default border color */
+}
+.custom-select .ant-select-selector:focus {
+  outline: none;
+  border-color: #8e5ba6 !important; /* Override Ant Design default border color */
+}
+.chatbot-bg {
+  background-color: #fff6f6;
+}
+.get-started-button-color {
+  background-color: #8e5ba6;
+}
+.gray-color {
+  background-color: #fef6f5;
+}
+.services-page-bg {
+  background-color: #fef6f5;
+}
+.get-started-button {
+  background-color: #8e5ba6;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 55px;
+  width: fit-content;
+  color: white;
+}
+.weight-management-bg {
+  background-color: #8e5ba6;
+  border-radius: 40px;
+  font-weight: 600;
+  width: fit-content;
+}
+.footer-bg {
+  background-color: #8e5ba6;
+}
+.primary-color {
+  color: #8e5ba6;
+}
+.primary-color-border {
+  border: 1px solid #8e5ba6;
+}
+.about-us-bg-color {
+  background-color: #fef6f5;
+}
+.lgn-button {
+  background-color: #8e5ba6;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: white;
+  border: none;
+  border-radius: 53px;
+  cursor: pointer;
+}
+.red-text-color {
+  color: #ff7269;
+}
+.red-text {
+  color: #ff7269;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.white-card {
+  background-color: #f5fdfc;
+}
+.white-card-text {
+  color: #ff7d61;
+}
+.info-card-one {
+  background-image: url("./assets/card-one-cover.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom right;
+  background-size: 45%;
+  background-color: #fef0c3;
+  border-radius: 20px;
+  width: 30%;
+}
+.info-card-two {
+  background-image: url("./assets/card-two-cover.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom right;
+  background-size: 40%;
+  background-color: #fee6dc;
+  border-radius: 20px;
+  width: 30%;
+}
+.info-card-three {
+  background-image: url("./assets/card-three-cover.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom right;
+  background-size: 45%;
+  background-color: #eedff7;
+  border-radius: 20px;
+  width: 30%;
+}
+.footer-heading-color {
+  color: #ffdad2;
+  font-weight: 600;
+  font-size: 14px;
+}
+.checkbox-rad {
+  border-radius: 20px;
+  background-color: #f5fdfc;
+  color: #3ca6a6;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  background-color: white;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+/* .active, .accordion:hover {
+  background-color: #ccc;
+} */
+.border-faq {
+  border-top-left-radius: 16px; /* Adjust the radius value as needed */
+  border-top-right-radius: 16px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.background-white-opacity {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  display: none;
+  overflow: hidden;
+  width: 100%;
+  border-top-left-radius: 0px; /* Adjust the radius value as needed */
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+input.PhoneInputInput {
+  outline: none;
+  height: full;
+}
+
+.symptoms-tracker-card {
+  background-image: url("./assets/dashboard/symptomsTrackerImage.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom right;
+  background-size: 40%;
+  background-color: #ffdbef;
+  border-radius: 20px;
+  width: 30%;
+}
+.mood-tracker-card {
+  background-image: url("./assets/dashboard/moodTrackerImage.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom right;
+  background-size: 60%;
+  background-color: #d5f7fa;
+  border-radius: 20px;
+  width: 30%;
+}
+.cycle-tracker-card {
+  background-image: url("./assets/dashboard/cycleTrackerImage.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom right;
+  background-size: 55%;
+  background-color: #fbf9c6;
+  border-radius: 20px;
+  width: 30%;
+}
+.health-assistant-card {
+  background-image: url("./assets/dashboard/healthAssistantImage.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom right;
+  background-size: 65%;
+  background-color: #e6caf3;
+  border-radius: 20px;
+  width: 30%;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+@media (max-width: 900px) {
+  .hero-banner {
+    background-image: none;
+    min-height: 200px;
+  }
+  .symptoms-tracker-card {
+    background-size: 25%;
+    padding: 0px 20px;
+  }
+  .mood-tracker-card {
+    padding: 0px 20px;
+    background-size: 35%;
+  }
+  .cycle-tracker-card {
+    padding: 0px 20px;
+    background-size: 30%;
+  }
+  .health-assistant-card {
+    padding: 0px 20px;
+    background-size: 40%;
+  }
+}
+
+/* .modal-wrapper body{
+  background-color: red;
+} */
+.ant-modal-footer button {
+  background-color: #8e5ba6;
+  color: white;
+  font-weight: 700;
+  padding: 20px 20px;
+}
+
+.prompt-field {
+  border-radius: 40px;
+  border: 1px solid #8e5ba6;
+  padding: 5px;
+}
+.back-button {
+  border-radius: 40px;
+  border: 1px solid #8e5ba6;
+  color: #8e5ba6;
+  font-weight: 600;
+}
+.select-border .ant-select-selector {
+  border: 1px solid #8e5ba6 !important; /* Customize the border color and width */
+  border-radius: 8px !important; /* Customize the border radius */
+}
+
+.custom-calendar .ant-picker-cell-inner {
+  padding: 4px;
+}
+
+.custom-calendar .ant-picker-calendar-date-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.events li {
+  margin-bottom: 4px;
+}
+
+.ant-badge-status-text {
+  font-size: 12px;
+}
