@@ -42,6 +42,13 @@ function Footer() {
               >
                 About Us
               </Link>
+              <Link
+                to="/find-a-clinic"
+                onClick={() => window.scrollTo(0, 0)}
+                className="mb-5 md:mb-3 md:text-xs"
+              >
+                Find a Clinic
+              </Link>
             </div>
           </div>
 

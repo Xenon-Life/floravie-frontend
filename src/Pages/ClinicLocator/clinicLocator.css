@@ -1,0 +1,58 @@
+.clinic-locator-map {
+  height: 520px;
+  width: 100%;
+  border-radius: 12px;
+  z-index: 0;
+}
+
+.clinic-locator-map .leaflet-popup-content-wrapper {
+  border-radius: 10px;
+}
+
+.clinic-popup-title {
+  font-weight: 600;
+  color: #8e5ba6;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.clinic-popup-meta {
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+.clinic-popup-directions {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: #8e5ba6;
+  color: white !important;
+  border-radius: 6px;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.clinic-popup-directions:hover {
+  background: #7a4f92;
+  color: white;
+}
+
+.clinic-list-card {
+  transition: box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.clinic-list-card:hover,
+.clinic-list-card.active {
+  border-color: #8e5ba6 !important;
+  box-shadow: 0 4px 12px rgba(142, 91, 166, 0.15);
+}
+
+.clinic-locator-pin {
+  background: #8e5ba6;
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+}

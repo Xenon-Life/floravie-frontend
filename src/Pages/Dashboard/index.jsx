@@ -22,6 +22,10 @@ function Dashboard() {
   const navigateToCommunity = () => {
     navigate("/community");
   };
+
+  const navigateToClinicLocator = () => {
+    navigate("/clinic-locator");
+  };
   return (
     <>
       <div className="w-full flex justify-start gap-20 md:flex-col">
@@ -92,6 +96,20 @@ function Dashboard() {
                 onClick={() => navigateToCommunity()}
               >
                 Open Now
+              </button>
+            </div>
+          </div>
+
+          <div className="clinic-locator-card md:w-full min-w-[48%] max-h-[255px] min-h-[255px] mb-4 md:mb-2">
+            <p className="text-2xl md:text-xl font-medium pt-2 px-5 mb-4">
+              Clinic Locator
+            </p>
+            <div className="px-5">
+              <button
+                className="rounded-3xl px-5 py-2 font-semibold text-black mb-4 bg-[#B8E0C8] hover:text-[#8e5ba6]"
+                onClick={() => navigateToClinicLocator()}
+              >
+                Find Clinics
               </button>
             </div>
           </div>

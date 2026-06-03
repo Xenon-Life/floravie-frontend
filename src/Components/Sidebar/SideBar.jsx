@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  EnvironmentOutlined,
   HomeOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -35,6 +36,7 @@ export const items = [
   getItem("Symptoms Tracker", "5", <LuStethoscope />, "/symptoms-tracker"),
   getItem("Quizzes", "6", <HiOutlineClipboardList />, "/quizzes"),
   getItem("Community", "7", <HiOutlineUsers />, "/community"),
+  getItem("Clinic Locator", "8", <EnvironmentOutlined />, "/clinic-locator"),
 ];
 
 export default function SideBar() {

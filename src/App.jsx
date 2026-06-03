@@ -23,6 +23,7 @@ import Quizzes from "./Pages/Quizzes/index.jsx";
 import Community from "./Pages/Community/index.jsx";
 import PostDetail from "./Pages/Community/PostDetail.jsx";
 import PrivateChat from "./Pages/Community/PrivateChat.jsx";
+import ClinicLocator from "./Pages/ClinicLocator/index.jsx";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/about-us" element={<AboutUs />}></Route>
           <Route path="/waiting-list" element={<WaitingList />}></Route>
           <Route path="/get-connected" element={<GetConnected />}></Route>
+          <Route path="/find-a-clinic" element={<ClinicLocator />}></Route>
 
           <Route path="/sign-in" element={<Login />}></Route>
           <Route path="/sign-up" element={<SignUp />}></Route>
@@ -54,6 +56,10 @@ function App() {
             <Route path="/community" element={<Community />} />
             <Route path="/community/post/:id" element={<PostDetail />} />
             <Route path="/community/chat/:conversationId" element={<PrivateChat />} />
+            <Route
+              path="/clinic-locator"
+              element={<ClinicLocator embedded />}
+            />
           </Route>
 
           <Route element={<AdminRoutes />}>

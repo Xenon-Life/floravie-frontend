@@ -61,11 +61,9 @@ function Login() {
     console.log("Failed:", errorInfo);
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = () => {
     setGoogleLoading(true);
-    window.location.href = await `${
-      import.meta.env.VITE_BACKEND_URL
-    }/auth/google`;
+    window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
   };
 
   return (

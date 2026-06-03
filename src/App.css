@@ -252,6 +252,14 @@ input.PhoneInputInput {
   border-radius: 20px;
   width: 30%;
 }
+.clinic-locator-card {
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: 55%;
+  background-color: #d4ebe0;
+  border-radius: 20px;
+  width: 30%;
+}
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -281,6 +289,10 @@ input.PhoneInputInput {
   .health-assistant-card {
     padding: 0px 20px;
     background-size: 40%;
+  }
+  .clinic-locator-card {
+    padding: 0px 20px;
+    background-size: 35%;
   }
 }
 

@@ -18,6 +18,7 @@ function NavBar() {
           <Link to="/our-services">Our Services</Link>
           <Link to="/women-health">Women Health</Link>
           <Link to="/about-us">About Us</Link>
+          <Link to="/find-a-clinic">Find a Clinic</Link>
         </div>
 
         <div>
@@ -51,6 +52,9 @@ function NavBar() {
               </Link>
               <Link to="/about-us" className="mb-2">
                 About Us
+              </Link>
+              <Link to="/find-a-clinic" className="mb-2">
+                Find a Clinic
               </Link>
             </div>
             <div>
