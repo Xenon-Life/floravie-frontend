@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
-import { Button, Card, Input } from "antd";
+import { Button, Card, Input, Tag } from "antd";
 import { io } from "socket.io-client";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../Auth/PrivateRoutes";
@@ -19,7 +19,34 @@ function PrivateChat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(true);
-  const [socketStatus, setSocketStatus] = useState("disconnected"); // disconnected | connected | joined
+  const [socketStatus, setSocketStatus] = useState("disconnected");
+  const [participantCount, setParticipantCount] = useState(0);
+  const [chatType, setChatType] = useState("group");
+
+  const senderLabel = useCallback(
+    (senderId) => {
+      const sid = String(senderId || "");
+      if (sid === myId) return "You";
+      const short = sid.slice(-4);
+      return `Guest •••${short}`;
+    },
+    [myId]
+  );
+
+  const fetchMeta = useCallback(async () => {
+    if (!token) return;
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/community/conversations/${conversationId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const convo = res.data?.conversation;
+      setParticipantCount(convo?.participantCount ?? 0);
+      setChatType(convo?.type || "group");
+    } catch (e) {
+      console.log(e);
+    }
+  }, [conversationId, token]);
 
   const fetchHistory = async () => {
     if (!token) return;
@@ -38,6 +65,8 @@ function PrivateChat() {
   };
 
   useEffect(() => {
+    setLoading(true);
+    fetchMeta();
     fetchHistory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversationId]);
@@ -66,6 +95,7 @@ function PrivateChat() {
 
     socket.on("joined_room", () => {
       setSocketStatus("joined");
+      fetchMeta();
     });
 
     socket.on("connect_error", (err) => {
@@ -81,7 +111,7 @@ function PrivateChat() {
       socket.disconnect();
       socketRef.current = null;
     };
-  }, [conversationId, token]);
+  }, [conversationId, token, fetchMeta]);
 
   useEffect(() => {
     if (bottomRef.current) bottomRef.current.scrollIntoView({ behavior: "smooth" });
@@ -98,24 +128,37 @@ function PrivateChat() {
     socketRef.current?.emit("send_message", { conversationId, body: text });
   };
 
+  const isGroup = chatType === "group" || String(conversationId).startsWith("group_");
+
   return (
     <div className="w-full p-4">
       <ToastContainer />
       <div className="flex items-center justify-between mb-3">
         <div className="flex flex-col">
-          <h1 className="text-xl font-semibold">Private Chat</h1>
+          <h1 className="text-xl font-semibold">
+            {isGroup ? "Group Chat" : "Private Chat"}
+          </h1>
           <p className="text-sm opacity-80">
-            Anonymous room: {conversationId} • Status: {socketStatus}
+            {participantCount > 0
+              ? `${participantCount} participant${participantCount !== 1 ? "s" : ""}`
+              : "Loading participants…"}{" "}
+            • Status: {socketStatus}
           </p>
         </div>
         <Button onClick={() => navigate("/community")}>Back</Button>
       </div>
 
+      {isGroup && (
+        <Tag color="purple" className="mb-3">
+          Multiple people can chat in this room
+        </Tag>
+      )}
+
       <Card className="rounded-xl mb-3" style={{ height: 420, overflowY: "auto" }}>
         {loading ? (
           <div>Loading messages...</div>
         ) : messages.length === 0 ? (
-          <div>No messages yet. Say hello.</div>
+          <div>No messages yet. Say hello to the group.</div>
         ) : (
           <div className="flex flex-col gap-2">
             {messages.map((m) => {
@@ -128,7 +171,7 @@ function PrivateChat() {
                   }`}
                 >
                   <div className="text-xs opacity-60 mb-1">
-                    {isMe ? "You" : "Anonymous"}
+                    {senderLabel(m.sender)}
                   </div>
                   <div className="whitespace-pre-wrap">{m.body}</div>
                 </div>
@@ -155,4 +198,3 @@ function PrivateChat() {
 }
 
 export default PrivateChat;
-
