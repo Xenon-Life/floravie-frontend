@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Card } from "antd";
+import { Button, Card, Tag } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useUser } from "../../Auth/PrivateRoutes";
@@ -12,12 +12,14 @@ function PostDetail() {
   const myId = String(userInfo?.user?._id || "");
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [starting, setStarting] = useState(false);
-  const [authorChats, setAuthorChats] = useState([]);
+  const [joining, setJoining] = useState(false);
+  const [groupChat, setGroupChat] = useState(null);
 
   const fetchPost = useCallback(async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/community/posts/${id}`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/community/posts/${id}`
+      );
       setPost(res.data?.post || null);
     } catch (e) {
       console.log(e);
@@ -31,7 +33,7 @@ function PostDetail() {
     fetchPost();
   }, [fetchPost]);
 
-  const fetchAuthorChats = useCallback(async () => {
+  const fetchGroupChat = useCallback(async () => {
     const token = localStorage.getItem("token");
     if (!token || !id) return;
     try {
@@ -39,9 +41,9 @@ function PostDetail() {
         `${import.meta.env.VITE_BACKEND_URL}/community/posts/${id}/conversations`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setAuthorChats(res.data?.conversations || []);
+      setGroupChat(res.data?.groupChat || null);
     } catch (e) {
-      setAuthorChats([]);
+      setGroupChat(null);
       const msg = e?.response?.data?.message;
       if (msg) toast.error(msg);
     }
@@ -49,28 +51,24 @@ function PostDetail() {
 
   useEffect(() => {
     if (!post || !myId) return;
-    if (String(post.createdBy || "") === myId) {
-      fetchAuthorChats();
-    } else {
-      setAuthorChats([]);
-    }
-  }, [post, myId, fetchAuthorChats]);
-
-  // So the post author sees new chats as soon as someone taps “Chat Privately” (no manual refresh).
-  useEffect(() => {
-    if (!post || !myId) return;
-    if (String(post.createdBy || "") !== myId) return;
-    const t = setInterval(() => fetchAuthorChats(), 4000);
+    fetchGroupChat();
+    const t = setInterval(() => fetchGroupChat(), 4000);
     return () => clearInterval(t);
-  }, [post, myId, fetchAuthorChats]);
+  }, [post, myId, fetchGroupChat]);
 
-  const startChat = async () => {
+  const joinOrOpenChat = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
       toast.error("Please login again.");
       return;
     }
-    setStarting(true);
+
+    if (groupChat?.isParticipant && groupChat?.conversationId) {
+      navigate(`/community/chat/${groupChat.conversationId}`);
+      return;
+    }
+
+    setJoining(true);
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/community/conversations`,
@@ -84,10 +82,10 @@ function PostDetail() {
     } catch (e) {
       const msg =
         e?.response?.data?.message ||
-        "Could not start private chat. Please try again.";
+        "Could not join group chat. Please try again.";
       toast.error(msg);
     } finally {
-      setStarting(false);
+      setJoining(false);
     }
   };
 
@@ -107,6 +105,9 @@ function PostDetail() {
     );
   }
 
+  const inChat = groupChat?.isParticipant;
+  const count = groupChat?.participantCount ?? 0;
+
   return (
     <div className="w-full p-4">
       <ToastContainer />
@@ -115,52 +116,39 @@ function PostDetail() {
         <Button onClick={() => navigate("/community")}>Back</Button>
       </div>
 
-      <Card className="rounded-xl mb-4" title={<span className="font-semibold">{post.title}</span>}>
+      <Card
+        className="rounded-xl mb-4"
+        title={<span className="font-semibold">{post.title}</span>}
+      >
         <p className="whitespace-pre-wrap">{post.body}</p>
       </Card>
 
-      <Button
-        type="primary"
-        style={{ background: "#8E5BA6" }}
-        onClick={startChat}
-        loading={starting}
-        disabled={String(post?.createdBy || "") === myId}
-      >
-        Chat Privately
-      </Button>
-      {String(post?.createdBy || "") === myId ? (
-        <div className="mt-4">
-          <p className="text-sm opacity-80 mb-2">
-            <strong>You published this post.</strong> You can&apos;t use &quot;Chat Privately&quot; on your
-            own thread (that would mean chatting with yourself). Another logged-in user must open this
-            same post and tap <strong>Chat Privately</strong> first. Then use <strong>Open chat</strong>
-            below — it updates every few seconds, or tap Refresh.
-          </p>
-          <Button className="mb-3" onClick={() => fetchAuthorChats()}>
-            Refresh chat list
-          </Button>
-          {authorChats.length === 0 ? (
-            <p className="text-sm opacity-70">
-              No private chats on this post yet. Waiting for someone else to start one from this post.
-            </p>
-          ) : (
-            <div className="flex flex-col gap-2">
-              <p className="text-sm font-semibold">Private chats on this post</p>
-              {authorChats.map((c) => (
-                <Button
-                  key={c.conversationId}
-                  onClick={() => navigate(`/community/chat/${c.conversationId}`)}
-                >
-                  Open chat (anonymous guest)
-                </Button>
-              ))}
-            </div>
-          )}
-        </div>
-      ) : null}
+      <div className="flex flex-wrap items-center gap-3 mb-3">
+        <Button
+          type="primary"
+          style={{ background: "#8E5BA6" }}
+          onClick={joinOrOpenChat}
+          loading={joining}
+        >
+          {inChat ? "Open group chat" : "Join group chat"}
+        </Button>
+        {count > 0 && (
+          <Tag color="purple">
+            {count} {count === 1 ? "person" : "people"} in chat
+          </Tag>
+        )}
+        <Button onClick={() => fetchGroupChat()}>Refresh</Button>
+      </div>
+
+      <p className="text-sm opacity-80 max-w-xl">
+        Everyone on this post shares <strong>one group room</strong>. Any logged-in
+        member can join and chat together (anonymous display names in the thread).
+        {String(post?.createdBy || "") === myId
+          ? " As the author, open the same room to reply to everyone."
+          : null}
+      </p>
     </div>
   );
 }
 
 export default PostDetail;
-
